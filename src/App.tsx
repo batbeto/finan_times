@@ -7,6 +7,7 @@ import { items } from './data/items';
 import { getCurrentMonth, filterListByMonth } from './helpers/dateFilter';
 import { TableArea } from './components/TableArea';
 import { InfoArea } from './components/InfoArea';
+import { InsertArea } from './components/InsertArea';
 
 const App = () => {
   const [list, setList] = useState(items);
@@ -37,6 +38,12 @@ const App = () => {
     setExpense(expenseCount);
   },[filteredList]);
 
+  const handleAddItem = (item: Item) =>{
+    let newList = [...list];
+    newList.push(item);
+    setList(newList);
+  };
+
   useEffect(()=>{
     setFilteredList( filterListByMonth(list, currentMonth) );
   }, [list, currentMonth]);
@@ -53,6 +60,7 @@ const App = () => {
           income={income}
           expense={expense}
         />
+        <InsertArea onAdd={handleAddItem}/>
         <TableArea list={filteredList}/>
       </C.Body>
     </C.Container>
